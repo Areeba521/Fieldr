@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 name: fieldr_project
+=======
+name: fieldr
+>>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
 description: "A new Flutter project."
 publish_to: 'none'
 version: 0.1.0
@@ -7,6 +11,7 @@ environment:
   sdk: ^3.5.3
 
 dependencies:
+<<<<<<< HEAD
   firebase_auth: ^5.3.4
   firebase_core: ^3.9.0
   flutter:
@@ -19,14 +24,24 @@ dependencies:
   intl: ^0.20.1
   dropdown_button2: ^2.3.9
   golden_toolkit: ^0.15.0
+=======
+  flutter:
+    sdk: flutter
+>>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+<<<<<<< HEAD
   firebase_auth_mocks: ^0.14.1
 
 flutter:
   uses-material-design: true
   assets:
   - images/
+=======
+
+flutter:
+  uses-material-design: true
+>>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08

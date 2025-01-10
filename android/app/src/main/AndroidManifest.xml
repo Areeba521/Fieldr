@@ -1,7 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<<<<<<< HEAD
 <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:label="Fieldr"
+=======
+    <application
+        android:label="fieldr"
+>>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
