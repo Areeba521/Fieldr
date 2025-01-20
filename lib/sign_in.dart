@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fieldr_project/parent_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -205,6 +206,10 @@ class _SignInState extends State<SignIn> {
       child: TextField(
         controller: controller,
         obscureText: isPassword,
+        style: const TextStyle(
+        color: Colors.black, 
+        fontSize: 18,       
+      ),
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
             horizontal: 20,
@@ -231,16 +236,49 @@ class _SignInState extends State<SignIn> {
   }
 }
 
+
+
 Future<UserCredential> signInWithGoogle() async {
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+  final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
-  return await FirebaseAuth.instance.signInWithCredential(credential);
+
+  
+  UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+  User? user = userCredential.user;
+
+  if (user != null) {
+
+    CollectionReference usersCollection = FirebaseFirestore.instance.collection('User');
+
+    
+    DocumentSnapshot userDoc = await usersCollection.doc(user.uid).get();
+
+    if (!userDoc.exists) {
+      QuerySnapshot totalUsersSnapshot = await usersCollection.get();
+      int totalUsers = totalUsersSnapshot.docs.length;
+
+     
+      String newUserId = 'user${(totalUsers + 1).toString().padLeft(3, '0')}';
+
+      await usersCollection.doc(user.uid).set({
+        'email': user.email,
+        'username': googleUser!.displayName ?? 'Unknown User',
+        'role': 'Regular Player', 
+        'stats': {
+            'assists': 0,
+            'goals': 0,
+            'matchesPlayed': 0,
+          },
+        'teamId': null, 
+        'profilePicture': "https://karachiunited.com/wp-content/uploads/2023/12/av-1.jpg", // Default value
+        'userId': newUserId,
+      });
+    }
+  }
+
+  return userCredential;
 }
-
-
-

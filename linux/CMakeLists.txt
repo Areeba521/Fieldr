@@ -4,17 +4,10 @@ project(runner LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
-<<<<<<< HEAD
 set(BINARY_NAME "fieldr_project")
 # The unique GTK application identifier for this application. See:
 # https://wiki.gnome.org/HowDoI/ChooseApplicationID
 set(APPLICATION_ID "com.example.fieldr_project")
-=======
-set(BINARY_NAME "fieldr")
-# The unique GTK application identifier for this application. See:
-# https://wiki.gnome.org/HowDoI/ChooseApplicationID
-set(APPLICATION_ID "com.example.fieldr")
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

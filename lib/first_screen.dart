@@ -1,10 +1,10 @@
 import 'package:fieldr_project/sign_in.dart';
-//import 'package:fieldr/utils/colors.dart';
+
 import 'package:flutter/material.dart';
 
 import 'signup_screen.dart';
 
-//import 'signup_screen.dart';
+
 
 class MyFirstScreen extends StatelessWidget {
   const MyFirstScreen({super.key});
@@ -12,12 +12,15 @@ class MyFirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    double screenHeight = size.height;
+    double screenWidth = size.width;
+
     return Scaffold(
       body: Stack( children:[
         Container
             (
-            height: size.height,
-            width: size.width,
+            height: screenHeight,
+            width: screenWidth,
             decoration:  BoxDecoration(
              image: DecorationImage(
               image: const AssetImage("images/front_image.jpg"),
@@ -32,7 +35,7 @@ class MyFirstScreen extends StatelessWidget {
             ),
          
           Positioned(
-            top: size.height*0.4,
+            top: screenHeight * 0.3,
             left: 0,
             right: 0,
             child:  Center(
@@ -42,7 +45,8 @@ class MyFirstScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold, 
-                  fontSize: 48, 
+                  //fontSize: 48, 
+                  fontSize: screenWidth * 0.12, 
                   color: Colors.white.withOpacity(0.9), 
                   height: 1.2),),
 
@@ -52,7 +56,8 @@ class MyFirstScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.bold, 
-                  fontSize: 35, 
+                  //fontSize: 35, 
+                  fontSize: screenWidth * 0.09,
                   color: Colors.white.withOpacity(0.9), 
                   height: 1.2),),
 
@@ -71,8 +76,10 @@ class MyFirstScreen extends StatelessWidget {
                       horizontal: 25,
                     ),
                     child: Container(
-                      height: size.height* 0.08,
-                      width: size.width,
+                      // height: size.height* 0.08,
+                      // width: size.width,
+                      height: screenHeight * 0.08,
+                      width: screenWidth * 0.9,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         //color: imageBckClr.withOpacity(0.3),
@@ -87,8 +94,11 @@ class MyFirstScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(right: 5),
                         child: Row(children: [
-                          Container(height: size.height*0.08,
-                          width: size.width / 2.2,
+                          Container(
+                          // height: size.height*0.08,
+                          // width: size.width / 2.2,
+                            height: screenHeight * 0.08,
+                            width: screenWidth / 2.2,
                           decoration: BoxDecoration(
                             //color: imageBckClr,
                             color: const Color(0xFF293232),

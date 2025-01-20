@@ -160,10 +160,12 @@ class _MatchListViewState extends State<MatchListView> {
         ),
         isExpanded: true, 
         underline: const SizedBox(), 
-        style: const TextStyle(
-          color: Colors.black,
-          fontSize: 16,
-        ),
+         style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 16,
+     
+      ),
+
+
       ),
     ),
     const SizedBox(height: 16), 
@@ -192,7 +194,7 @@ class _MatchListViewState extends State<MatchListView> {
                 final matches = state.matches.where((match) {
                   final isFutureMatch = match.dateTime.toDate().isAfter(now);
                   final matchLocationMatches = match.location.toLowerCase().contains(_searchQuery);
-                  final timeMatches = _isMatchInSelectedTimeRange(match.dateTime);
+                    final timeMatches = _isMatchInSelectedTimeRange(match.timeOfDay);
 
                   return isFutureMatch && matchLocationMatches && timeMatches;
                 }).toList();
@@ -231,21 +233,18 @@ class _MatchListViewState extends State<MatchListView> {
   }
 
 
-bool _isMatchInSelectedTimeRange(Timestamp dateTime) {
+bool _isMatchInSelectedTimeRange(String timeOfDay) {
     if (_selectedTimeOfDay == 'All') return true;
-
-    final DateTime matchTime = dateTime.toDate();
-    final int hour = matchTime.hour;
 
     switch (_selectedTimeOfDay) {
       case 'Morning':
-        return hour >= 6 && hour <= 11;
+        return timeOfDay == 'Morning';
       case 'Afternoon':
-        return hour >= 12 && hour <= 14;
+        return timeOfDay == 'Afternoon';
       case 'Evening':
-        return hour >= 15 && hour <= 19;
+        return timeOfDay == 'Evening';
       case 'Night':
-        return hour >= 19 && hour <= 23;
+        return timeOfDay == 'Night';
       default:
         return true;
     }
@@ -320,13 +319,14 @@ bool _isMatchInSelectedTimeRange(Timestamp dateTime) {
         ),
 
         
-        const Text(
+         Text(
           "VS",
-          style: TextStyle(
-            fontSize:20,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+        
+      ),
+         
         ),
       
     
@@ -353,41 +353,41 @@ bool _isMatchInSelectedTimeRange(Timestamp dateTime) {
     return DateFormat('yyyy-MM-dd – hh:mm a').format(date);
   }
 
-  void _joinMatch(BuildContext context, Match match) async {
-    final userId = 'user123';
-    try {
-      List<String> teamAPlayers = List<String>.from(match.teamA['players'] ?? []);
-      List<String> teamBPlayers = List<String>.from(match.teamB['players'] ?? []);
+  // void _joinMatch(BuildContext context, Match match) async {
+  //   final userId = 'user123';
+  //   try {
+  //     List<String> teamAPlayers = List<String>.from(match.teamA['players'] ?? []);
+  //     List<String> teamBPlayers = List<String>.from(match.teamB['players'] ?? []);
 
-      if (teamAPlayers.length <= teamBPlayers.length) {
-        await FirebaseFirestore.instance
-            .collection('Match')
-            .doc(match.matchId)
-            .update({
-          'teamA.players': FieldValue.arrayUnion([userId]),
-        });
-      } else {
-        await FirebaseFirestore.instance
-            .collection('Match')
-            .doc(match.matchId)
-            .update({
-          'teamB.players': FieldValue.arrayUnion([userId]),
-        });
-      }
+  //     if (teamAPlayers.length <= teamBPlayers.length) {
+  //       await FirebaseFirestore.instance
+  //           .collection('Match')
+  //           .doc(match.matchId)
+  //           .update({
+  //         'teamA.players': FieldValue.arrayUnion([userId]),
+  //       });
+  //     } else {
+  //       await FirebaseFirestore.instance
+  //           .collection('Match')
+  //           .doc(match.matchId)
+  //           .update({
+  //         'teamB.players': FieldValue.arrayUnion([userId]),
+  //       });
+  //     }
 
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('You have joined the match!')),
-        );
-      }
-    } catch (e) {
-      if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error joining the match: $e')),
-        );
-      }
-    }
-  }
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('You have joined the match!')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     if (context.mounted) {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text('Error joining the match: $e')),
+  //       );
+  //     }
+  //   }
+  // }
 
 
 class Match {
@@ -396,6 +396,7 @@ class Match {
   final String location;
   final String matchId;
   final String skillLevel;
+  final String timeOfDay; 
   final Map<String, dynamic> teamA; 
   final Map<String, dynamic> teamB;  
 
@@ -405,6 +406,7 @@ class Match {
     required this.location,
     required this.matchId,
     required this.skillLevel,
+    required this.timeOfDay,  
     required this.teamA,
     required this.teamB,
   });
@@ -416,6 +418,7 @@ class Match {
       location: json['location'] ?? '',
       matchId: json['matchId'] ?? '',
       skillLevel: json['skillLevel'] ?? '',
+      timeOfDay: json['timeOfDay'] ?? 'All',
      teamA: json['teamA'] != null
         ? {
             
@@ -481,13 +484,7 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
         return Match.fromJson(doc.data() as Map<String, dynamic>);
       }).toList();
 
-      //var playerCounts = _calculatePlayersPerMatch(matches);
-      // num playerInTeamA = playerCounts['teamA'] ?? 0;
-      // num playerInTeamB = playerCounts['teamB'] ?? 0;
-
       
-  
-
       emit(MatchItemLoaded(
         matches: matches,
         // playerInTeamA: playerInTeamA,
@@ -499,18 +496,7 @@ class MatchBloc extends Bloc<MatchEvent, MatchState> {
     }
   }
 
-  // Map<String, num> _calculatePlayersPerMatch(List<Match> matches) {
-  //   num playerInTeamA = 0;
-  //   num playerInTeamB = 0;
-
-  //   for (var match in matches) {
-  //     playerInTeamA += (match.teamA['players'] as List).length;
-  //     playerInTeamB += (match.teamB['players'] as List).length;
-  //   }
-
-  //   return {'teamA': playerInTeamA, 'teamB': playerInTeamB};
-  // }
-
+  
  
 }
 

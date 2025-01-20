@@ -1,18 +1,10 @@
 # Project-level configuration.
 cmake_minimum_required(VERSION 3.14)
-<<<<<<< HEAD
 project(fieldr_project LANGUAGES CXX)
 
 # The name of the executable created for the application. Change this to change
 # the on-disk name of your application.
 set(BINARY_NAME "fieldr_project")
-=======
-project(fieldr LANGUAGES CXX)
-
-# The name of the executable created for the application. Change this to change
-# the on-disk name of your application.
-set(BINARY_NAME "fieldr")
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
 
 # Explicitly opt in to modern CMake behaviors to avoid warnings with recent
 # versions of CMake.

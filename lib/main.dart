@@ -1,53 +1,125 @@
-<<<<<<< HEAD
-//import 'package:fieldr_project/parent_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fieldr_project/parent_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'firebase_options.dart';
+// ignore: depend_on_referenced_packages
+import 'package:provider/provider.dart';
 import 'first_screen.dart';
+import 'theme_set.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
   options: DefaultFirebaseOptions.currentPlatform,
 );
-  runApp(const MainApp());
+
+
+  await Hive.initFlutter();
+  await Hive.openBox('settings');
+  await Hive.openBox('userBox');
+  
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MainApp(),
+    )
+  );
+
+    //const MainApp());
 }
 
 
 
-=======
-import 'package:flutter/material.dart';
+// class MainApp extends StatelessWidget {
+//   const MainApp({super.key});
 
-void main() {
-  runApp(const MainApp());
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     final themeProvider = Provider.of<ThemeProvider>(context);
 
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       themeMode: themeProvider.themeMode,
+//       // theme: ThemeData.light(),
+//       // darkTheme: ThemeData.dark(),
+//       theme: AppTheme.lightTheme,
+//       darkTheme: AppTheme.darkTheme,
+//       home: StreamBuilder<User?>(
+//         stream: FirebaseAuth.instance.authStateChanges(),
+//         builder: (context, snapshot) {
+//           if (snapshot.connectionState == ConnectionState.waiting) {
+//             return const Center(child: CircularProgressIndicator());
+//           }
+ 
+//           if (snapshot.hasData) {
+//             return const ParentScreen(); 
+//           }
+//           return const MyFirstScreen(); 
+//         },
+//       ),
+//     );
+//   }
+// }
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-<<<<<<< HEAD
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: MyFirstScreen(),
-    
-    );
+  Future<void> _initializeUser() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      // Fetch user data from Firestore
+      final userDoc = await FirebaseFirestore.instance
+          .collection('User')
+          .where('email', isEqualTo: user.email)
+          .get();
 
+      if (userDoc.docs.isNotEmpty) {
+        final userData = userDoc.docs.first.data();
 
-    
+        // Store user data in Hive
+        final userBox = Hive.box('userBox');
+        userBox.put('email', userData['email']);
+        userBox.put('role', userData['role']);
+        userBox.put('userId', userData['userId']);
+      }
+    }
   }
 
+  @override
+  Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
-=======
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      themeMode: themeProvider.themeMode,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      home: FutureBuilder(
+        future: _initializeUser(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          if (FirebaseAuth.instance.currentUser != null) {
+            // Check the stored role
+            final userBox = Hive.box('userBox');
+            final role = userBox.get('role', defaultValue: 'member');
+
+            if (role == 'Team Captain') {
+              return const ParentScreen(); // Replace with Captain's screen
+            } else {
+              return const ParentScreen(); // Replace with Member's screen
+            }
+          }
+
+          return const MyFirstScreen();
+        },
       ),
     );
   }
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
 }

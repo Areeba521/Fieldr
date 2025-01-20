@@ -1,9 +1,11 @@
 import 'package:fieldr_project/first_screen.dart';
 import 'package:fieldr_project/match_finder.dart';
 import 'package:fieldr_project/team_managementScreen.dart';
+import 'package:fieldr_project/theme_set.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 
 class ParentScreen extends StatefulWidget {
   const ParentScreen({Key? key}) : super(key: key);
@@ -28,12 +30,12 @@ class _ParentScreenState extends State<ParentScreen> {
   ];
 
   
-  //final List<String> _tabTitles = ["Match Finder", "Team Management"];
 
  @override
   Widget build(BuildContext context) {
 
     User? user = FirebaseAuth.instance.currentUser;
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(title: const Text("Fieldr" , style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold) ,),
@@ -63,11 +65,32 @@ class _ParentScreenState extends State<ParentScreen> {
                 ],
               ),
             ),
+ 
+      ListTile(
+  leading: Icon(
+    themeProvider.themeMode == ThemeMode.dark
+        ? Icons.dark_mode
+        : Icons.light_mode,
+  ),
+  title: const Text("Color Mode"),
+  trailing: Switch(
+    value: themeProvider.themeMode == ThemeMode.dark,
+    onChanged: (value) {
+      themeProvider.toggleTheme(value);
+    },
+    activeColor: Theme.of(context).primaryColor,
+    inactiveThumbColor: Colors.grey,
+    inactiveTrackColor: Colors.grey.shade300,
+  ),
+),
+
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text("Logout"),
               onTap: _logout, 
             ),
+
+            
           ],
         ),
       ),

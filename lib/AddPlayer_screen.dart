@@ -130,8 +130,11 @@ Future<void> addPlayersToTeam() async {
           ),
           ElevatedButton(
             onPressed: addPlayersToTeam,
-            child: const Text("Confirm", style: TextStyle(color: Colors.white),),
             style: ElevatedButton.styleFrom(backgroundColor: const Color(0xFF2a6068)),
+            child:  Text("Confirm",
+             //style: TextStyle(color: Colors.white),
+             style: Theme.of(context).textTheme.bodyLarge
+             ),
           ),
         ],
       ),

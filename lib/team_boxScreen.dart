@@ -30,18 +30,27 @@ class TeamBox extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
 
-              CircleAvatar(
-                radius: 60,
-                backgroundImage: team.captain['captainProfilePic'] != null &&
-                        team.captain['captainProfilePic'] != ''
-                    ? NetworkImage(team.captain['captainProfilePic'])
-                        as ImageProvider
-                    : const AssetImage("images/man.png"),
+              // CircleAvatar(
+              //   radius: 60,
+              //   backgroundImage: team.captain['captainProfilePic'] != null &&
+              //           team.captain['captainProfilePic'] != ''
+              //       ? NetworkImage(team.captain['captainProfilePic'])
+              //           as ImageProvider
+              //       : const AssetImage("images/man.jpg"),
                     
 
-                backgroundColor: Colors.grey.shade200,
-              ),
-
+              //   backgroundColor: Colors.grey.shade200,
+              // ),
+CircleAvatar(
+  radius: 60,
+  backgroundImage: team.captain['captainProfilePic'] != null &&
+          team.captain['captainProfilePic'] != ''
+      ? (team.captain['captainProfilePic'].startsWith('http')
+          ? NetworkImage(team.captain['captainProfilePic'])
+          : AssetImage(team.captain['captainProfilePic'])) as ImageProvider
+      : const AssetImage("images/man.png"),
+  backgroundColor: Colors.grey.shade200,
+),
               
               const SizedBox(height: 16),
        
@@ -98,29 +107,29 @@ class TeamBox extends StatelessWidget {
     );
   }
 
-  Widget _buildStatColumn(String title, int? value) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-          value?.toString() ?? "0",
-          style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: const Color(0xFF2a6068),
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: Colors.grey,
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget _buildStatColumn(String title, int? value) {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     children: [
+  //       Text(
+  //         value?.toString() ?? "0",
+  //         style: const TextStyle(
+  //           fontSize: 20,
+  //           fontWeight: FontWeight.bold,
+  //           color: const Color(0xFF2a6068),
+  //         ),
+  //       ),
+  //       const SizedBox(height: 4),
+  //       Text(
+  //         title,
+  //         style: const TextStyle(
+  //           fontSize: 14,
+  //           color: Colors.grey,
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildActionButton({
     required BuildContext context,

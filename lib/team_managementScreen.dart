@@ -9,6 +9,7 @@ class TeamManagementScreen extends StatelessWidget {
   const TeamManagementScreen({super.key});
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Team Details',

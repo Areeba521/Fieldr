@@ -1,11 +1,6 @@
 {
-<<<<<<< HEAD
     "name": "fieldr_project",
     "short_name": "fieldr_project",
-=======
-    "name": "fieldr",
-    "short_name": "fieldr",
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

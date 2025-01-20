@@ -12,6 +12,7 @@ class TeamMembersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
 
     return Scaffold(
       appBar: AppBar(
@@ -108,24 +109,27 @@ return Padding(
                       children: [
                         Text(
                           'Goals: ${member['stats']['goals']}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey.shade800,
-                          ),
+
+                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 10,
+       
+      ),
                         ),
                         Text(
                           'Assists: ${member['stats']['assists']}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey.shade800,
-                          ),
+                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 10,
+      
+      ),
+
                         ),
                         Text(
                           'Matches: ${member['stats']['matchesPlayed']}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.grey.shade800,
-                          ),
+                  
+                           style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 10,
+       
+      ),
                         ),
                       ],
                     ),

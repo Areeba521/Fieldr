@@ -114,7 +114,10 @@ Future<void> _submitMatch() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create New Match', style: TextStyle(color: Colors.white),),
+        title: Text('Create New Match',
+        // style: TextStyle(color: Colors.white),
+         style: Theme.of(context).textTheme.bodyLarge
+         ),
         backgroundColor: const Color(0xFF2a6068),
       ),
       body: SingleChildScrollView(
@@ -238,7 +241,10 @@ Future<void> _submitMatch() async {
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
-            child: const Text('Create Match', style: TextStyle(color: Colors.white),),
+            child:  Text('Create Match', 
+            //style: TextStyle(color: Colors.white),
+             style: Theme.of(context).textTheme.bodyLarge
+            ),
           ),
         ],
             ),

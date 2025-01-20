@@ -85,13 +85,13 @@ class FieldCard extends StatelessWidget {
               style: TextStyle(fontSize: 14, color: Colors.grey[700]),
             ),
             const SizedBox(height: 12),
-            const Text(
+            Text(
               'Availability:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.black,
-              ),
+        
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+        fontSize: 16,
+        fontWeight: FontWeight.w600,
+      ),
             ),
             const SizedBox(height: 8),
             ListView.builder(
@@ -136,9 +136,10 @@ class FieldCard extends StatelessWidget {
                     builder: (_) => BookingModal(field: field),
                   );
                 },
-                child: const Text(
+                child: Text(
                   'Book Slot',
-                  style: TextStyle(color: Colors.white),
+              
+                   style: Theme.of(context).textTheme.bodyLarge
                 ),
               ),
             ),

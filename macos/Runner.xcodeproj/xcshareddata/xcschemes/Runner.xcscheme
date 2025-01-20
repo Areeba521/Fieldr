@@ -15,11 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
                BuildableName = "fieldr_project.app"
-=======
-               BuildableName = "fieldr.app"
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
                BlueprintName = "Runner"
                ReferencedContainer = "container:Runner.xcodeproj">
             </BuildableReference>
@@ -35,11 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
             BuildableName = "fieldr_project.app"
-=======
-            BuildableName = "fieldr.app"
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -73,11 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
             BuildableName = "fieldr_project.app"
-=======
-            BuildableName = "fieldr.app"
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
@@ -94,11 +82,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "33CC10EC2044A3C60003C045"
-<<<<<<< HEAD
             BuildableName = "fieldr_project.app"
-=======
-            BuildableName = "fieldr.app"
->>>>>>> 16c78ab469d37117aeab4818438245c958c6ca08
             BlueprintName = "Runner"
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
