@@ -273,8 +273,8 @@ Future<UserCredential> signInWithGoogle() async {
             'goals': 0,
             'matchesPlayed': 0,
           },
-        'teamId': null, 
-        'profilePicture': "https://karachiunited.com/wp-content/uploads/2023/12/av-1.jpg", // Default value
+        'teamId': "", 
+        'profilePicture': "https://karachiunited.com/wp-content/uploads/2023/12/av-1.jpg", 
         'userId': newUserId,
       });
     }

@@ -43,7 +43,7 @@ class _MySignupPageState extends State<MySignupPage> {
             'goals': 0,
             'matchesPlayed': 0,
           },
-          'teamId': null,
+          'teamId': "",
           'userId': userId,
         });
 

@@ -1,15 +1,28 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive/hive.dart';
 
 import 'createTeam_screen.dart';
 import 'team_boxScreen.dart';
 
 class TeamManagementScreen extends StatelessWidget {
+ 
+
   const TeamManagementScreen({super.key});
+
+ String? _getUserRole() {
+    final userBox = Hive.box('userBox');
+    final role = userBox.get('role');
+    debugPrint('Fetched user role from Hive: $role');
+    return role; 
+  }
+
   @override
   Widget build(BuildContext context) {
-    
+      final String? userRole = _getUserRole();
+
+    debugPrint('User role determined in build: $userRole');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Team Details',
@@ -59,7 +72,10 @@ class TeamManagementScreen extends StatelessWidget {
 
       
       ),
-    floatingActionButton: FloatingActionButton(
+    floatingActionButton: (userRole == "Team Captain")?
+
+    
+    FloatingActionButton(
         onPressed: () {
         Navigator.push(
   context,
@@ -71,7 +87,7 @@ class TeamManagementScreen extends StatelessWidget {
         },
         backgroundColor: const Color(0xFF2a6068),
         child: const Icon(Icons.add, color: Colors.white),
-      ),
+      ):null,
     
     );
   }

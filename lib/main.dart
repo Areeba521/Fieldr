@@ -71,7 +71,7 @@ class MainApp extends StatelessWidget {
   Future<void> _initializeUser() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      // Fetch user data from Firestore
+ 
       final userDoc = await FirebaseFirestore.instance
           .collection('User')
           .where('email', isEqualTo: user.email)
@@ -80,7 +80,7 @@ class MainApp extends StatelessWidget {
       if (userDoc.docs.isNotEmpty) {
         final userData = userDoc.docs.first.data();
 
-        // Store user data in Hive
+        
         final userBox = Hive.box('userBox');
         userBox.put('email', userData['email']);
         userBox.put('role', userData['role']);
@@ -106,14 +106,14 @@ class MainApp extends StatelessWidget {
           }
 
           if (FirebaseAuth.instance.currentUser != null) {
-            // Check the stored role
+           
             final userBox = Hive.box('userBox');
-            final role = userBox.get('role', defaultValue: 'member');
+            final role = userBox.get('role');
 
             if (role == 'Team Captain') {
-              return const ParentScreen(); // Replace with Captain's screen
+              return const ParentScreen(); 
             } else {
-              return const ParentScreen(); // Replace with Member's screen
+              return const ParentScreen(); 
             }
           }
 
