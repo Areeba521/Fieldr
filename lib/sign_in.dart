@@ -266,7 +266,7 @@ Future<UserCredential> signInWithGoogle() async {
 
       await usersCollection.doc(user.uid).set({
         'email': user.email,
-        'username': googleUser!.displayName ?? 'Unknown User',
+        'name': googleUser!.displayName ?? 'Unknown User',
         'role': 'Regular Player', 
         'stats': {
             'assists': 0,

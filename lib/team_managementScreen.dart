@@ -14,15 +14,14 @@ class TeamManagementScreen extends StatelessWidget {
  String? _getUserRole() {
     final userBox = Hive.box('userBox');
     final role = userBox.get('role');
-    debugPrint('Fetched user role from Hive: $role');
-    return role; 
+    debugPrint('Fetched user role from Hive in TeamManagementScreen: $role');
+    return role;
   }
 
   @override
   Widget build(BuildContext context) {
       final String? userRole = _getUserRole();
-
-    debugPrint('User role determined in build: $userRole');
+    debugPrint('User role determined in build method: $userRole');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Team Details',
